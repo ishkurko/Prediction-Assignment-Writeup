@@ -146,10 +146,12 @@ confusionMatrix(predictdt, testingsubd$classe)
 ## Prediction through Random Forest
 
 Training on training data subset
+We will use 10 cross-validation when building model.
 
 ```r
 require(randomForest)
-modfitrf <- randomForest(classe ~ ., data = trainingsubd)
+tc <- trainControl(method = "cv", 10)
+modfitrf <- randomForest(classe ~ ., data = trainingsubd, trControl = tc)
 ```
 
 Prediction on testing data subset
@@ -197,8 +199,8 @@ confusionMatrix(predictrf, testingsubd$classe)
 
 The accuracy of regression modeling methods:
 
-1. Decision Tree: **0.7274**
-2. Random Forest: **0.9921**   
+1. Decision Tree: **0.7274**. Out of sample error in this predisction is 27% - very high.
+2. Random Forest: **0.9921**. Out of sample error in this predisction is 0.8% - good result.
 
 # Testing
 
